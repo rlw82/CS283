@@ -47,8 +47,75 @@ void part2()
    free(strs);
 }
 
-int main(void)
+void selectionsort(int* arr, int size)
 {
-   part2();
+   int i,j;
+   int* arrpoint;
+
+   for(i = 0; i < size; i++)
+   {
+      for(j = i+1; j < size; j++)
+      {
+         if(arr[j] < arr[i])
+         {
+            arrpoint = arr[j];
+            arr[j] = arr[i];
+            arr[i] = arrpoint;
+         }
+      }
+   }
 }
 
+struct linkedlist
+{
+   int data;
+   struct linkedlist *next;
+};
+
+void part4(struct linkedlist *ll)
+{
+    struct linkedlist *temp2;
+    struct linkedlist *temp;
+    int i;
+    for(temp = ll; temp->next != NULL; temp = temp->next)
+    {
+        for(temp2 = temp->next; temp2 != NULL; temp2 = temp2->next)
+        {
+            if(temp->data > temp2->data)
+            {
+                i = temp->data;
+                temp->data = temp2->data;
+                temp2->data = i;
+            }
+        }
+    }
+}
+
+int main(void)
+{
+    struct linkedlist *start,*node,*temp;
+    start->next = NULL;
+    node = start;
+    int i;
+    for(i = 0; i < 10; i++)
+    {
+        node->next = (struct linkedlist*) malloc(sizeof(struct linkedlist));
+        node->data = 10-i;
+        node = node->next;
+        node->next = NULL;
+    }
+    part4(start);
+    node = start;
+    for(; node->next != NULL; node = node->next)
+    {
+        printf("%d\n", node->data);
+    }
+    node = start;
+    temp = node;
+    while(temp)
+    {
+        temp = node->next;
+        free(node);
+        node = temp;
+    }
+}
